@@ -1,0 +1,74 @@
+.file-card {
+    position: relative;
+    height: 100px;
+    width: 130px;
+    border-radius: 5px;
+    border: 1px solid var(--clr-400);
+    &:hover {
+        background-color: var(--clr-200);
+    }
+    .file-card-icon {
+        display: grid;
+        user-select: none;
+        height: 75px;
+        img { height: 40px; margin: auto; }
+    }
+    .file-card-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 25px;
+        padding: 0px 5px;
+        font-size: 11px;
+        color: var(--txt-100);
+        border-top: 1px solid var(--clr-400);
+        .file-card-info-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 80px;
+        }
+    }
+    .file-card-context-menu {
+        position: absolute;
+        top: 4px;
+        z-index: 2;
+        svg { cursor: pointer; }
+        .file-card-context-buttons {
+            display: flex;
+            position: absolute;
+            flex-direction: column;
+            width: 105px;
+            top: -5px;
+            left: 24px;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid var(--clr-400);
+            background-color: var(--clr-000);
+            button, input, label {
+                height: 26px;
+                padding: 0px 10px 0px 4px;
+                border-radius: 4px;
+                color: var(--txt-000);
+            }
+            button {
+                svg { margin-right: 2px; }
+            }
+            p {
+                font-size: .8rem;
+                padding: 4px;
+            }
+            label {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            button.disabled { opacity: .5; }
+        }
+    }
+    .file-card-selector {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+    }
+}

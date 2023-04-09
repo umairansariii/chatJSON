@@ -1,0 +1,134 @@
+.dashboard-editor-options {
+    width: 300px;
+    border-left: 1px solid var(--clr-400);
+    border-right: 1px solid var(--clr-400);
+    .dashboard-editor-options-header {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        height: 180px;
+        padding: 20px;
+        h2 {
+            font-weight: 100;
+            word-wrap: break-word;
+            margin-bottom: 10px;
+        }
+        div {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            svg {
+                cursor: pointer;
+                height: 30px;
+                width: 30px;
+            }
+        }
+    }
+    .dashboard-editor-options-contacts {
+        h4, h6 {
+            font-weight: 100;
+            padding: 8px 20px;
+            border-bottom: 1px solid var(--clr-400);
+            svg {
+                cursor: pointer;
+                vertical-align: middle;
+                float: right;
+            }
+        }
+        input[type='datetime-local'] {
+            height: 30px;
+            width: 100%;
+            font-size: 16px;
+            padding: 0px 20px;
+            border-bottom: 1px solid var(--clr-400);
+        }
+        .dashboard-editor-options-contacts-btn {
+            cursor: pointer;
+            width: 100%;
+            padding: 8px 0px;
+            font-size: 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--clr-400);
+            &:hover {
+                background-color: var(--clr-300);
+            }
+        }
+        // .dashboard-editor-options-contacts-user-container {
+        //     overflow-y: scroll;
+        //     max-height: 246px;
+        // }
+        .dashboard-editor-options-contacts-group-container {
+            overflow-y: scroll;
+            max-height: 58px;
+        }
+        .dashboard-editor-options-contacts-group-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1px 20px;
+            font-size: 12px;
+            border-bottom: 1px solid var(--clr-400);
+            span {
+                cursor: pointer;
+            }
+            svg {
+                cursor: pointer;
+                height: 16px;
+                width: 16px;
+                margin-right: -4px;
+                vertical-align: middle;
+            }
+            &:hover {
+                background-color: var(--clr-300);
+            }
+        }
+        .dashboard-editor-options-contacts-user-card {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            padding: 5px 20px;
+            border-bottom: 1px solid var(--clr-400);
+            &:hover {
+                background-color: var(--clr-200);
+            }
+            input[type='checkbox'] {
+                margin-right: 8px;
+                margin-bottom: 2px;
+            }
+            input[type='text'] {
+                outline: none;
+                font-size: 15px;
+                border-radius: 5px;
+                color: var(--txt-100);
+                background-color: var(--clr-300);
+            }
+            .user-card-context-menu {
+                position: relative;
+                margin-left: auto;
+                svg { cursor: pointer; }
+                .user-card-context-buttons {
+                    display: flex;
+                    position: absolute;
+                    flex-direction: column;
+                    width: 105px;
+                    top: -6px;
+                    left: 24px;
+                    padding: 4px;
+                    border-radius: 5px;
+                    border: 1px solid var(--clr-400);
+                    background-color: var(--clr-000);
+                    button {
+                        height: 26px;
+                        padding: 0px 10px 0px 4px;
+                        border-radius: 4px;
+                        color: var(--txt-000);
+                    }
+                    button {
+                        svg { margin-right: 2px; }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+.icons {
+    height: 20px;
+    fill: var(--txt-000);
+}
+button {
+    cursor: pointer;
+}
+label {
+    font-size: .8rem;
+    input[type='checkbox'] {
+        cursor: pointer;
+        margin-right: 5px;
+    }
+}
+button, input, label {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    &:hover {
+        background-color: var(--clr-300);
+    }
+}
+input[type='datetime-local'] {
+    color: var(--txt-000);
+}
+::-webkit-calendar-picker-indicator {
+    filter: var(--ico-000);
+}
