@@ -181,6 +181,10 @@ export default function Options(props) {
         // (!) To apply filtration:
         props.apply(filter);
     };
+    const handleSaveBackup = () => {
+        // (!) To save edited backup on local machine:
+        props.save();
+    };
     const handleClose = () => {
         // (!) To close the viewer and unload the file:
         props.close();
@@ -230,7 +234,7 @@ export default function Options(props) {
                 <input onChange={updateFilter} type="datetime-local" name='end'/>
                 <h6>OPTIONS</h6>
                 <div className='dashboard-editor-options-contacts-btn' onClick={handleApplyFilter}>Apply</div>
-                <div className='dashboard-editor-options-contacts-btn'>Save</div>
+                <div className='dashboard-editor-options-contacts-btn' onClick={handleSaveBackup}>Save</div>
             </div>
         </div>
     )

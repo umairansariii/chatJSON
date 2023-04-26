@@ -130,12 +130,16 @@ export default function FilesProvider({ children }) {
         // /!\ Saves file on local machine.
         fileSave(modified);
     };
+    const exportas = (data) => {
+        // (!) To export user edited data:
+        fileSave(data);
+    };
     const close = () => {
         // To close a file from the viewer:
         setView([]);
     };
     return (
-        <FilesContext.Provider value={{ add, convert, remove, save, selector, merge, preview, join, saveas, close, files, view }}>
+        <FilesContext.Provider value={{ add, convert, remove, save, selector, merge, preview, join, saveas, exportas, close, files, view }}>
             { children }
         </FilesContext.Provider>
     )
