@@ -38,20 +38,20 @@ export default function Explorer() {
     };
     return (
         <div className='dashboard-explorer-container no-print'>
-            <h1>Zaptales</h1>
-            <p>Turn your memories into a storybook 📕🤗</p>
+            <h1>ChatJSON</h1>
+            <p>Turns your memories into a storybook 📕🤗</p>
 
             <div className='dashboard-explorer-instructions'>
                 <h4><b>Quick guide might help you:</b></h4>
                 <p>Export <IconExport/> your backup files from your device or social accounts, <a href='#'>see this link</a> to get help how to export your chats.</p>
                 <p>Drop your backup files here or <IconBrowse/> browse from your device.</p>
                 <p>Convert your <IconConvert/> backup files in JSON format or <IconSave/> save on your device.</p>
-                <p>If you have multiple backups from different time, <IconMerge/> merge all by selecting them.</p>
+                <p>If you have multiple backups from different period, <IconMerge/> merge all by selecting them.</p>
                 <p>Preview <IconPreview/> your chats in the viewer, use <IconFilter/> filters for long conversations.</p>
                 <p>Select <IconSelect/> messages you want to keep or <IconPlus/> create a group of events.</p><br />
                 <p>Save, you are done!</p>
                 <h4><b>Privacy and security:</b></h4>
-                <p>Your files and chats will be processed on <IconShield/> client-end, no internet, no uploading required.</p>
+                <p>Your files and chats will be processed on <IconShield/> client-side, no internet, no uploading required.</p>
                 <p>End-to-end protected, <IconLock/> no privacy leakage guaranteed.</p>
             </div>
             <div className='dashboard-explorer' onDrop={(e) => handleDrop(e)}>
