@@ -48,6 +48,7 @@ export default function FilesProvider({ children }) {
         fileSave(files[id]);
     };
     const selector = (name, flag) => {
+        // (!) To toggle file selection:
         switch (flag) {
             case 'del':
                 setSelect(prev => prev.filter(e => e !== name));
@@ -121,9 +122,7 @@ export default function FilesProvider({ children }) {
             const user = contacts.find(e => e.name == view.messages[i].name);
             if (user) {
                 modified.push({
-                    name: user.rename? user.rename: user.name,
-                    body: view.messages[i].body,
-                    date: view.messages[i].date,
+                    ...view.messages[i], name: user.rename? user.rename: user.name, id: modified.length,
                 });
             };
         };
@@ -139,7 +138,21 @@ export default function FilesProvider({ children }) {
         setView([]);
     };
     return (
-        <FilesContext.Provider value={{ add, convert, remove, save, selector, merge, preview, join, saveas, exportas, close, files, view }}>
+        <FilesContext.Provider value={{
+                add,
+                convert,
+                remove,
+                save,
+                selector,
+                merge,
+                preview,
+                join,
+                saveas,
+                exportas,
+                close,
+                files,
+                view,
+            }}>
             { children }
         </FilesContext.Provider>
     )

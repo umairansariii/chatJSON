@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 // Style
 import './scss/nav.scss';
@@ -11,11 +12,11 @@ import IconSetting from '../../assets/svgs/icons/setting';
 export default function Nav() {
     return (
         <nav className="navbar">
-            <div className="nav-items"><IconHome/></div>
-            <div className="nav-items"><IconBrowse/></div>
-            <div className="nav-items"><IconImage/></div>
-            <div className="nav-items"><IconColor/></div>
-            <div className="nav-items"><IconSetting/></div>
+            <Link className="nav-items" to="/"><IconHome/></Link>
+            <Link className="nav-items" to="/browse"><IconBrowse/></Link>
+            <Link className="nav-items" to="/media"><IconImage/></Link>
+            <Link className="nav-items" to="/theme"><IconColor/></Link>
+            <Link className="nav-items" to="/settings"><IconSetting/></Link>
         </nav>
     )
 };

@@ -73,14 +73,13 @@
                 cursor: pointer;
             }
             svg {
-                cursor: pointer;
                 height: 16px;
                 width: 16px;
                 margin-right: -4px;
                 vertical-align: middle;
             }
             &:hover {
-                background-color: var(--clr-300);
+                background-color: var(--clr-200);
             }
         }
         .dashboard-editor-options-contacts-user-card {

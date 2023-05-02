@@ -16,5 +16,8 @@ export default function loader(file, cb, id) {
         if (file.type == 'text/xml') {
             cb(convertSMS(reader.result, file.name), id);
         };
+        if (file.type == 'application/json') {
+            cb(JSON.parse(reader.result), file.name);
+        };
     };
 };
