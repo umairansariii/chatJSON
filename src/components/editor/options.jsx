@@ -183,6 +183,7 @@ export default function Options(props) {
     };
     const handleSaveBackup = () => {
         // (!) To save edited backup on local machine:
+        createGroup();
         props.save();
     };
     const handleClose = () => {

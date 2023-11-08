@@ -31,14 +31,11 @@ export default function Editor() {
         updateContacts();
     },[File.view]);
     useEffect(() => {
-        function createNewGroup() {
-            // (!) Create a new group of un-grouped selected messages.
-            if (select.length > 0) {
-                createGroup();
-            };
+        function generateBackup() {
+            // /!\ Fix: group state isn't updating, therefore forcing state to update.
             exportChat();
         };
-        createNewGroup();
+        generateBackup();
     },[state]);
     // Methods
     const getUsers = (list) => {
@@ -172,6 +169,7 @@ export default function Editor() {
     const handleEditorClose = () => {
         // (!) To close the editor and unload the file:
         File.close();
+        setGroup([]);
         setUsers([]);
         setSelect([]);
         setApply({start:'',end:''});
