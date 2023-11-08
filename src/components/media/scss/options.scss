@@ -1,0 +1,82 @@
+.dashboard-media-options {
+    width: 300px;
+    border-left: 1px solid var(--clr-400);
+    border-right: 1px solid var(--clr-400);
+    .dashboard-media-options-header {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        height: 180px;
+        padding: 20px;
+        h2 {
+            font-weight: 100;
+            word-wrap: break-word;
+            margin-bottom: 10px;
+        }
+        div {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            svg {
+                cursor: pointer;
+                height: 30px;
+                width: 30px;
+            }
+        }
+    }
+    .dashboard-media-options-collections {
+        h4, h6 {
+            font-weight: 100;
+            padding: 8px 20px;
+            border-bottom: 1px solid var(--clr-400);
+            label {
+                cursor: pointer;
+                vertical-align: middle;
+                float: right;
+            }
+        }
+        input[type='file'] {
+            display: none;
+        }
+        .dashboard-media-options-collections-container {
+
+        }
+        .dashboard-media-options-collections-card {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            padding: 5px 20px;
+            border-bottom: 1px solid var(--clr-400);
+            span {
+                cursor: pointer;
+            }
+            svg {
+                vertical-align: middle;
+            }
+            &:hover {
+                background-color: var(--clr-200);
+            }
+        }
+        .dashboard-media-options-collections-card-groups {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1px 20px;
+            font-size: 12px;
+            border-bottom: 1px solid var(--clr-400);
+            span {
+                cursor: pointer;
+            }
+            svg {
+                height: 16px;
+                width: 16px;
+                margin-right: 4px;
+                vertical-align: middle;
+            }
+            &:hover {
+                background-color: var(--clr-200);
+            }
+        }
+    }
+}
