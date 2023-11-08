@@ -5,7 +5,7 @@ import FilesProvider from "../contexts/files/provider";
 import Explorer from "../components/explorer/explorer";
 import Editor from '../components/editor/editor';
 
-export default function Dashboard() {
+export default function DashboardBrowse() {
     return (
         <div className="dashboard">
             <FilesProvider>
