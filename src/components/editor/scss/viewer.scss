@@ -1,13 +1,69 @@
 .dashboard-editor-viewer {
-    overflow-x: auto;
-    display: flex;
-    flex-direction: column;
+    position: relative;
     height: 100%;
     width: 600px;
-    padding: 30px;
-    gap: 10px;
     border-right: 1px solid var(--clr-400);
+
+    .editor-viewer-options {
+        position: absolute;
+        display: flex;
+        width: 100%;
+        top: 30px;
+        gap: 5px;
+        padding: 0px 30px;
+        z-index: 1;
+        .editor-viewer-options-bar {
+            overflow: hidden;
+            display: flex;
+            height: 50px;
+            flex: 1;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            background-color: var(--opa-000);
+            input,
+            select {
+                flex: 1;
+                font-size: 14px;
+                padding: 0px 20px;
+                border-radius: 25px;
+                color: var(--txt-000);
+                &:focus {
+                    border: 2px solid var(--pur-100);
+                }
+            }
+        }
+        .editor-viewer-options-wpr {
+            display: flex;
+            gap: 5px;
+            .editor-viewer-options-btn {
+                cursor: pointer;
+                display: grid;
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+                backdrop-filter: blur(15px);
+                background-color: var(--opa-000);
+                &:hover {
+                    background-color: var(--clr-300);
+                }
+                svg {
+                    margin: auto;
+                }
+            }
+        }
+    }
+    .editor-viewer-container {
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        padding: 30px;
+        padding-top: 100px;
+        gap: 10px;
+    }
     .editor-viewer-message {
+        position: relative;
         cursor: pointer;
         width: fit-content;
         max-width: 250px;
@@ -31,12 +87,42 @@
             text-align: right;
             color: var(--clr-500);
         }
+        .editor-viewer-message-appends {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            div {
+                display: grid;
+                height: 24px;
+                width: 24px;
+                border-radius: 50%;
+                border: 2px solid var(--clr-000);
+                background-color: var(--clr-300);
+                &:hover {
+                    background-color: var(--clr-400);
+                }
+                svg {
+                    height: 18px;
+                    width: 18px;
+                    margin: auto;
+                }
+            }
+        }
     }
     .editor-viewer-message.left {
         align-self: flex-start;
+        .editor-viewer-message-appends {
+            right: -12px;
+        }
     }
     .editor-viewer-message.right {
         align-self: flex-end;
+        .editor-viewer-message-appends {
+            left: -12px;
+        }
     }
     .editor-viewer-message.hidden {
         display: none !important;
