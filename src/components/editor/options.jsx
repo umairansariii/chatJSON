@@ -1,18 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
+import formatInputDate from "../../utils/formatInputDate";
 
 // Style
-import './scss/options.scss';
+import "./scss/options.scss";
 // Icons
-import IconClose from '../../assets/svgs/icons/close';
-import IconMenu from '../../assets/svgs/icons/menu';
-import IconPlus from '../../assets/svgs/icons/plus';
-import IconRename from '../../assets/svgs/icons/rename';
-import IconTransfer from '../../assets/svgs/icons/transfer';
-import IconSave from '../../assets/svgs/icons/save';
-import IconShow from '../../assets/svgs/icons/show';
-import IconHide from '../../assets/svgs/icons/hide';
+import IconClose from "../../assets/svgs/icons/close";
+import IconMenu from "../../assets/svgs/icons/menu";
+import IconPlus from "../../assets/svgs/icons/plus";
+import IconRename from "../../assets/svgs/icons/rename";
+import IconTransfer from "../../assets/svgs/icons/transfer";
+import IconSave from "../../assets/svgs/icons/save";
+import IconShow from "../../assets/svgs/icons/show";
+import IconHide from "../../assets/svgs/icons/hide";
 
 // Components
+// EDITOR > OPTIONS > USERS ---------------------------------------------:
 function User(props) {
     // State
     const [open, setOpen] = useState(false);
@@ -25,49 +27,49 @@ function User(props) {
         // (!) To auto focus on renaming field:
         if (rename) {
             inputName.current.focus();
-        };
-    },[rename]);
+        }
+    }, [rename]);
     // Methods
     const handleSwap = () => {
         // (!) To swap the direction of a specific user:
-        props.update(prev => {
+        props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex(e => e.name == props.data.name);
-            if (prev[index].dir == 'left') {
-                prev[index].dir = 'right';
+            const index = prev.findIndex((e) => e.name == props.data.name);
+            if (prev[index].dir == "left") {
+                prev[index].dir = "right";
             } else {
-                prev[index].dir = 'left';
-            };
+                prev[index].dir = "left";
+            }
             return [...prev];
         });
     };
     const handleHide = () => {
         // (!) To hide or show a specific user from the viewer:
-        props.update(prev => {
+        props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex(e => e.name == props.data.name);
+            const index = prev.findIndex((e) => e.name == props.data.name);
             if (!prev[index].hidden) {
                 prev[index].hidden = true;
             } else {
                 prev[index].hidden = false;
-            };
+            }
             return [...prev];
         });
     };
     const handleRename = (name) => {
         // (!) To rename a specific user:
-        props.update(prev => {
+        props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex(e => e.name == props.data.name);
+            const index = prev.findIndex((e) => e.name == props.data.name);
             prev[index].rename = name;
             return [...prev];
         });
     };
     const handleSelection = (e) => {
         // (!) To make multiple selection of users:
-        props.update(prev => {
+        props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex(e => e.name == props.data.name);
+            const index = prev.findIndex((e) => e.name == props.data.name);
             prev[index].selected = e.target.checked;
             return [...prev];
         });
@@ -83,11 +85,11 @@ function User(props) {
     };
     const handleToggle = () => {
         // (!) To toggle on/off context:
-        setOpen(prev => {
+        setOpen((prev) => {
             if (open && rename) {
                 // If user renaming and accidentally closes context, made changes unsaved.
                 setRename(false);
-            };
+            }
             return !prev;
         });
     };
@@ -99,144 +101,169 @@ function User(props) {
             setRename(false);
         } else {
             setRename(true);
-        };
+        }
     };
     const handleKeyEvent = (e) => {
-        if (e.key == 'Enter') {
+        if (e.key == "Enter") {
             handleToggleRename();
-        };
+        }
     };
     return (
-        <div className='dashboard-editor-options-contacts-user-card'>
-            <input type="checkbox" onChange={handleSelection}/>
-            { rename?
-                <input 
+        <div className="editor-options-contacts-user-card">
+            <input type="checkbox" onChange={handleSelection} />
+            {rename ? (
+                <input
                     type="text"
                     onKeyDown={handleKeyEvent}
-                    placeholder={props.data.rename? props.data.rename: props.data.name}
+                    placeholder={
+                        props.data.rename ? props.data.rename : props.data.name
+                    }
                     ref={inputName}
-                />:
-                <span>{props.data.rename? props.data.rename: props.data.name}</span>
-            }
-            <div className='user-card-context-menu'>
-                <div onClick={handleToggle}><IconMenu/></div>
-                { open &&
-                    <div className='user-card-context-buttons'>
-                        <button onClick={handleJoin}><IconPlus/>Join</button>
-                        <button onClick={handleSwap}><IconTransfer/>Swap</button>
-                        <button onClick={handleToggleRename}><IconRename/>{rename? 'Change':'Rename'}</button>
-                        <button onClick={handleExport}><IconSave/>Save</button>
-                        <button onClick={handleHide}>{props.data.hidden? <IconShow/>:<IconHide/>}{props.data.hidden? 'Show':'Hide'}</button>
+                />
+            ) : (
+                <span>
+                    {props.data.rename ? props.data.rename : props.data.name}
+                </span>
+            )}
+            <div className="user-card-context-menu">
+                <div onClick={handleToggle}>
+                    <IconMenu />
+                </div>
+                {open && (
+                    <div className="user-card-context-buttons">
+                        <button onClick={handleJoin}>
+                            <IconPlus />
+                            Join
+                        </button>
+                        <button onClick={handleSwap}>
+                            <IconTransfer />
+                            Swap
+                        </button>
+                        <button onClick={handleToggleRename}>
+                            <IconRename />
+                            {rename ? "Change" : "Rename"}
+                        </button>
+                        <button onClick={handleExport}>
+                            <IconSave />
+                            Save
+                        </button>
+                        <button onClick={handleHide}>
+                            {props.data.hidden ? <IconShow /> : <IconHide />}
+                            {props.data.hidden ? "Show" : "Hide"}
+                        </button>
                     </div>
-                }
+                )}
             </div>
         </div>
-    )
-};
+    );
+}
+
+// EDITOR > OPTIONS > GROUPS --------------------------------------------:
 function Group(props) {
-    // Methods
-    const handleDelete = () => {
-        props.del(props.id);
-    };
-    const handleLoad = () => {
-        props.load(props.id);
-    };
     return (
-        <div className="dashboard-editor-options-contacts-group-card">
-            <span onClick={handleLoad}>Group{props.id+1} ({props.count})</span>
-            <span onClick={handleDelete}><IconClose/></span>
+        <div className="editor-options-contacts-group-card">
+            <span onClick={() => props.load(props.id)}>
+                Group{props.id + 1} ({props.count})
+            </span>
+            <span onClick={() => props.del(props.id)}>
+                <IconClose />
+            </span>
         </div>
-    )
-};
+    );
+}
 
+// EDITOR > OPTIONS -----------------------------------------------------:
 export default function Options(props) {
-    // State
-    const [filter, setFilter] = useState({start:'',end:''});
+    // Reference
+    const inputDateStart = useRef();
+    const inputDateEnd = useRef();
 
+    // Effect
+    useEffect(() => {
+        function autoApplyFilter() {
+            // (!) When a new file is loaded, this will automatically set the filter.
+            inputDateStart.current.value = formatInputDate(props.filter.start);
+            inputDateEnd.current.value = formatInputDate(props.filter.end);
+        }
+        autoApplyFilter();
+    }, [props.filter]);
     // Methods
-    const createGroup = () => {
-        // (!) To create a new group:
-        if (props.selected.length > 0) {
-            props.createGrp();
-        };
-    };
-    const deleteGroup = (id) => {
-        // (!) To delete a specific group:
-        props.deleteGrp(id);
-    };
-    const loadGroup = (id) => {
-        // (!) To load a specific group:
-        props.loadGrp(id);
-    };
-    const updateFilter = (e) => {
-        // (!) To update filter state:
-        setFilter(prev => {
-            // Here, target.name represents (start|end).
-            prev[e.target.name] = e.target.value;
-            // /!\ Refreshes the state.
-            return {...prev};
-        });
-    };
     const handleApplyFilter = () => {
         // (!) To apply filtration:
-        props.apply(filter);
-    };
-    const handleSaveBackup = () => {
-        // (!) To save edited backup on local machine:
-        createGroup();
-        props.save();
-    };
-    const handleClose = () => {
-        // (!) To close the viewer and unload the file:
-        props.close();
+        props.apply({
+            start: inputDateStart.current.value,
+            end: inputDateEnd.current.value,
+        });
     };
     return (
-        <div className='dashboard-editor-options no-print'>
-            <div className='dashboard-editor-options-header'>
-                <div onClick={handleClose}><IconClose/></div>
-                <h2>{props.file.name? props.file.name:'No_Backup'}</h2>
-                <p>{props.file.count? props.file.count:'0'} messages</p>
+        <div className="dashboard-editor-options no-print">
+            <div className="editor-options-header">
+                <div
+                    className="editor-options-header-btn"
+                    onClick={props.close}
+                >
+                    <IconClose />
+                </div>
+                <h2>{props.file.name ? props.file.name : "No_Backup"}</h2>
+                <p>{props.file.count ? props.file.count : "0"} messages</p>
             </div>
-            <div className='dashboard-editor-options-contacts'>
+            <div className="editor-options-contacts">
                 <h4>Contacts</h4>
-                <div className='dashboard-editor-options-contacts-user-container'>
-                    {
-                        props.contacts.map((item, idx) =>
-                            <User
-                                data={item}
-                                update={props.update}
-                                join={props.join}
-                                export={props.export}
-                                key={idx}
-                            />
-                        )
-                    }
+                <div className="editor-options-contacts-user-wpr">
+                    {props.users.map((item, idx) => (
+                        <User
+                            key={idx}
+                            data={item}
+                            join={props.join}
+                            update={props.update}
+                            export={props.export}
+                        />
+                    ))}
                 </div>
-                <br/><br/>
-                <h4>Selected ({props.selected.length}) <span onClick={createGroup}><IconPlus/></span></h4>
-                <div className='dashboard-editor-options-contacts-group-container'>
-                    {
-                        props.groups.map((item, idx) =>
-                            <Group 
-                                load={loadGroup}
-                                del={deleteGroup}
-                                count={item.length}
-                                id={idx}
-                                key={idx}
-                            />
-                        )
-                    }
+                <br />
+                <br />
+                <h4>
+                    Selected ({props.selected.length})
+                    <span onClick={props.createGrp}>
+                        <IconPlus />
+                    </span>
+                </h4>
+                <div className="editor-options-contacts-group-wpr">
+                    {props.groups.map((item, idx) => (
+                        <Group
+                            key={idx}
+                            id={idx}
+                            count={item.length}
+                            load={props.loadGrp}
+                            del={props.deleteGrp}
+                        />
+                    ))}
                 </div>
-                <br/><br/>
+                <br />
+                <br />
                 <h4>Filter</h4>
                 <h6>START</h6>
-                <input onChange={updateFilter} type="datetime-local" name='start'/>
+                <input
+                    type="datetime-local"
+                    name="start"
+                    ref={inputDateStart}
+                />
                 <h6>END</h6>
-                <input onChange={updateFilter} type="datetime-local" name='end'/>
+                <input type="datetime-local" name="end" ref={inputDateEnd} />
                 <h6>OPTIONS</h6>
-                <div className='dashboard-editor-options-contacts-btn' onClick={handleApplyFilter}>Apply</div>
-                <div className='dashboard-editor-options-contacts-btn' onClick={handleSaveBackup}>Save</div>
+                <div
+                    className="editor-options-contacts-btn"
+                    onClick={handleApplyFilter}
+                >
+                    Apply
+                </div>
+                <div
+                    className="editor-options-contacts-btn"
+                    onClick={props.save}
+                >
+                    Save
+                </div>
             </div>
         </div>
-    )
-};
+    );
+}
