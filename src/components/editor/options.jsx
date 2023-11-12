@@ -17,25 +17,25 @@ import IconHide from "../../assets/svgs/icons/hide";
 // EDITOR > OPTIONS > USERS ---------------------------------------------:
 function User(props) {
     // State
-    const [open, setOpen] = useState(false);
-    const [rename, setRename] = useState(false);
+    const [contextState, setContextState] = useState(false);
+    const [renameState, setRenameState] = useState(false);
     // Reference
-    const inputName = useRef();
+    const inputRename = useRef();
 
     // Effect
     useEffect(() => {
         // (!) To auto focus on renaming field:
-        if (rename) {
-            inputName.current.focus();
+        if (renameState) {
+            inputRename.current.focus();
         }
-    }, [rename]);
+    }, [renameState]);
     // Methods
     const handleSwap = () => {
         // (!) To swap the direction of a specific user:
         props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex((e) => e.name == props.data.name);
-            if (prev[index].dir == "left") {
+            const index = prev.findIndex((e) => e.name === props.data.name);
+            if (prev[index].dir === "left") {
                 prev[index].dir = "right";
             } else {
                 prev[index].dir = "left";
@@ -47,11 +47,11 @@ function User(props) {
         // (!) To hide or show a specific user from the viewer:
         props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex((e) => e.name == props.data.name);
-            if (!prev[index].hidden) {
-                prev[index].hidden = true;
-            } else {
+            const index = prev.findIndex((e) => e.name === props.data.name);
+            if (prev[index].hidden) {
                 prev[index].hidden = false;
+            } else {
+                prev[index].hidden = true;
             }
             return [...prev];
         });
@@ -60,7 +60,7 @@ function User(props) {
         // (!) To rename a specific user:
         props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex((e) => e.name == props.data.name);
+            const index = prev.findIndex((e) => e.name === props.data.name);
             prev[index].rename = name;
             return [...prev];
         });
@@ -69,7 +69,7 @@ function User(props) {
         // (!) To make multiple selection of users:
         props.update((prev) => {
             // /!\ This operation takes (n) time as number of messages.
-            const index = prev.findIndex((e) => e.name == props.data.name);
+            const index = prev.findIndex((e) => e.name === props.data.name);
             prev[index].selected = e.target.checked;
             return [...prev];
         });
@@ -83,42 +83,39 @@ function User(props) {
         // Here, this user data belongs to where context openned.
         props.export(props.data);
     };
-    const handleToggle = () => {
+    const handleToggleContext = () => {
         // (!) To toggle on/off context:
-        setOpen((prev) => {
-            if (open && rename) {
+        setContextState(() => {
+            if (contextState && renameState) {
                 // If user renaming and accidentally closes context, made changes unsaved.
-                setRename(false);
+                setRenameState(false);
             }
-            return !prev;
+            return !contextState;
         });
     };
     const handleToggleRename = () => {
         // (!) To toggle on/off renaming:
-        if (rename) {
+        if (renameState) {
             // /!\ This operation takes (n) time as number of messages.
-            handleRename(inputName.current.value);
-            setRename(false);
+            handleRename(inputRename.current.value);
+            setRenameState(false);
         } else {
-            setRename(true);
-        }
-    };
-    const handleKeyEvent = (e) => {
-        if (e.key == "Enter") {
-            handleToggleRename();
+            setRenameState(true);
         }
     };
     return (
         <div className="editor-options-contacts-user-card">
             <input type="checkbox" onChange={handleSelection} />
-            {rename ? (
+            {renameState ? (
                 <input
                     type="text"
-                    onKeyDown={handleKeyEvent}
+                    onKeyDown={(e) =>
+                        e.key === "Enter" ? handleToggleRename() : null
+                    }
                     placeholder={
                         props.data.rename ? props.data.rename : props.data.name
                     }
-                    ref={inputName}
+                    ref={inputRename}
                 />
             ) : (
                 <span>
@@ -126,10 +123,10 @@ function User(props) {
                 </span>
             )}
             <div className="user-card-context-menu">
-                <div onClick={handleToggle}>
+                <div onClick={handleToggleContext}>
                     <IconMenu />
                 </div>
-                {open && (
+                {contextState && (
                     <div className="user-card-context-buttons">
                         <button onClick={handleJoin}>
                             <IconPlus />
@@ -141,7 +138,7 @@ function User(props) {
                         </button>
                         <button onClick={handleToggleRename}>
                             <IconRename />
-                            {rename ? "Change" : "Rename"}
+                            {renameState ? "Change" : "Rename"}
                         </button>
                         <button onClick={handleExport}>
                             <IconSave />

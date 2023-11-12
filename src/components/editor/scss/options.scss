@@ -92,7 +92,6 @@
             }
             input[type="checkbox"] {
                 margin-right: 8px;
-                margin-bottom: 2px;
             }
             input[type="text"] {
                 outline: none;
@@ -104,6 +103,7 @@
             .user-card-context-menu {
                 position: relative;
                 margin-left: auto;
+                z-index: 1;
                 svg {
                     cursor: pointer;
                 }
@@ -117,7 +117,8 @@
                     padding: 4px;
                     border-radius: 5px;
                     border: 1px solid var(--clr-400);
-                    background-color: var(--clr-000);
+                    background-color: var(--opa-000);
+                    backdrop-filter: blur(15px);
                     button {
                         height: 26px;
                         padding: 0px 10px 0px 4px;
