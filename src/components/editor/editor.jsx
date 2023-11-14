@@ -127,63 +127,55 @@ export default function Editor() {
             }
         });
     };
-    const exportChat = () => {
-        // (!) To export user edited data as JSON:
-        if (File.view.hasOwnProperty("messages") && groups.length > 0) {
-            // (#) Collect all messages.
-            const selected = groups.flat(1);
-            // /!\ This operation takes (n) time as number of messages.
-            const filtered = File.view.messages.filter((e) =>
-                selected.includes(e.id)
-            );
-            const compiled = [];
-            // /!\ Rename and collects visible messages only.
-            filtered.forEach((item) => {
-                const user = users.find((e) => e.name == item.name);
-                if (!user.hidden) {
-                    compiled.push({
-                        ...item,
-                        name: user.rename ? user.rename : user.name,
-                    });
-                }
-            });
-            // (#) Collect all contacts.
-            const contacts = [];
-            // /!\ Drop unnecessary data and collects visible users only.
-            users.forEach((item) => {
-                if (!item.hidden) {
-                    contacts.push({
-                        name: item.rename ? item.rename : item.name,
-                        dir: item.dir,
-                    });
-                }
-            });
-            // (#) Collect all groups.
-            for (let i = 0; i < groups.length; i++) {
-                for (let j = 0; j < groups[i].length; j++) {
-                    const name = filtered.find(
-                        (e) => e.id == groups[i][j]
-                    ).name;
-                    // /!\ Keep visible messages only.
-                    if (users.find((e) => e.name == name).hidden) {
-                        groups[i].splice(j, 1);
-                    }
-                }
-            }
-            // /!\ Saves file on local machine.
-            File.exportas({
-                name: File.view.name,
-                messages: compiled,
-                count: compiled.length,
-                groups: groups,
-                users: contacts,
-            });
-        }
-    };
     const saveBackup = () => {
-        // (!) To save edited backup on local machine:
-        // /!\ Forces state to update.
-        createGroup();
+        // (!) To export edited chats as whole or into groups:
+        if (groups.length > 0) {
+            groups.forEach((group, idx) => {
+                // (!) Collect all messages from each group.
+                const messages = File.view.messages
+                    .filter((e) => group.includes(e.id))
+                    .map((msg) => {
+                        // (!) Rename only those messages.
+                        const user = users.find((e) => e.name === msg.name);
+                        return {
+                            ...msg,
+                            name: user.rename ? user.rename : user.name,
+                        };
+                    });
+                // Export each group individually.
+                File.exportas({
+                    count: messages.length,
+                    name: `Group_${idx + 1}`,
+                    messages,
+                });
+            });
+        } else {
+            if (File.view.hasOwnProperty("messages")) {
+                // (!) Collect all messages within a date range.
+                const messages = File.view.messages
+                    .filter((e) => {
+                        if (
+                            new Date(e.date) >= new Date(dateFilter.start) &&
+                            new Date(e.date) <= new Date(dateFilter.end)
+                        )
+                            return e;
+                    })
+                    .map((msg) => {
+                        // (!) Rename only those messages.
+                        const user = users.find((e) => e.name === msg.name);
+                        return {
+                            ...msg,
+                            name: user.rename ? user.rename : user.name,
+                        };
+                    });
+                // Export filtered messages.
+                File.exportas({
+                    count: messages.length,
+                    name: "Zaptales_Backup",
+                    messages,
+                });
+            }
+        }
     };
     const handleEditorClose = () => {
         // (!) To close the editor and offload the file:
@@ -195,26 +187,26 @@ export default function Editor() {
     return (
         <div className="dashboard-editor">
             <Options
+                file={{ name: File.view.name, count: File.view.count }}
+                selected={selectedMessage}
+                filter={dateFilter}
+                users={users}
+                groups={groups}
                 join={joinUsers}
                 update={setUsers}
                 export={exportUsers}
-                apply={applyFilter}
-                save={saveBackup}
                 createGrp={createGroup}
                 deleteGrp={deleteGroup}
                 loadGrp={loadGroup}
+                apply={applyFilter}
+                save={saveBackup}
                 close={handleEditorClose}
-                users={users}
-                selected={selectedMessage}
-                groups={groups}
-                filter={dateFilter}
-                file={{ name: File.view.name, count: File.view.count }}
             />
             <Viewer
-                users={users}
                 selected={selectedMessage}
-                selector={selectMessage}
                 filter={dateFilter}
+                users={users}
+                selector={selectMessage}
                 applyFilter={applyFilter}
             />
         </div>
